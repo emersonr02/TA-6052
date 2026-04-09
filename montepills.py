@@ -1,12 +1,15 @@
+from datetime import datetime
+
 clientes = {
     "PT5000": {"nome": "Emerson", "senha": "1234", "saldo": 1000, "Movimentos": [00001]},
     "PT5001": {"nome": "João", "senha": "5678", "saldo": 500, "Movimentos": [00001]}
     }
 contadorNIB = "02"
 regtransferencias = {
-    00001: {"tipo": "transferência", "remetente": "PT5000", "destinatário": "PT5001", "valor": 100, "data": "2024-06-01"}
+    "M00001": {"tipo": "transferência", "remetente": "PT5000", "destinatário": "PT5001", "valor": 100, "data": "2024-06-01"}
     }
-def loginUtilizador():
+contadorMovimentacao = "02"
+def loginAdmin():
     print("Bem-vindo ao sistema de login!")
     username = input("Digite seu nome de usuário: ")
     password = input("Digite sua senha: ")
@@ -15,6 +18,26 @@ def loginUtilizador():
         print("Login bem-sucedido! Bem-vindo, admin.")
     else:
         print("Credenciais inválidas. Tente novamente.")
+
+def loginUtilizador():
+    nib = input("Digite seu NIB: ")
+    if nib not in clientes:
+        print("NIB não encontrado.")
+        return None
+    
+    password = input("Digite sua senha: ")
+    if password == clientes[nib]["senha"]:
+        return nib
+    else:
+        print("Senha incorreta.")
+        return None
+
+def menuInicial():
+    print("Bem-vindo ao Banco Tal!")
+    print("1 - Entrar como utilizador")
+    print("9958 - Entrar como Administrador")
+    op = input("Escolha uma opção: ")
+    return op
 
 def menuUtilizador():
     print("\n--- Menu do Usuário ---")
@@ -38,16 +61,68 @@ def menuAdmin():
     op = input("Escolha uma opção: ")
     return op
 
-def consultarSaldo():
+def consultarSaldo(meuNIB):
     print("\n--- Consultar Saldo ---")
-    NIB = input("Digite o NIB do cliente: ")
-    try :
-        NIB = int(NIB)
-        for i in clientes
-            if i == NIB
-            saldo = clientes[NIB]["saldo"]
-            print(f"O saldo do cliente {clientes[NIB]['nome']} é: {saldo} euros.")
-            else:
-                print("NIB não encontrado. Tente novamente.")
+    print(f"Saldo atual: {clientes[meuNIB]['saldo']}€")
+    return
+
+def realizarLevantamento(meuNIB):
+    print("\n--- Realizar Levantamento ---")
+    try:
+        valor = float(input("Digite o valor a ser levantado: "))
+        if valor <= 0:
+            print("Valor deve ser maior que zero.")
+            return
+
+        if valor <= clientes[meuNIB]["saldo"]: 
+            clientes[meuNIB]["saldo"] -= valor
+            registrarMovimentacao(meuNIB, "Levantamento", valor)
+            print("Operação realizada com sucesso!")
+        else:
+            print("Saldo insuficiente.")
+            
+        print(f"Saldo atual: {clientes[meuNIB]['saldo']}€")
     except ValueError:
-        print("NIB inválido. Tente novamente.")
+        print("Entrada inválida. Digite apenas números.")
+
+def realizarDeposito(meuNIB):
+    print("\n--- Realizar Deposito ---")
+    try:
+        valor = float(input("Digite o valor a ser depositado: "))
+        if valor <= 0:
+            print("Valor deve ser maior que zero.")
+            return
+
+        if valor <= clientes[meuNIB]["saldo"]: 
+            clientes[meuNIB]["saldo"] += valor 
+            registrarMovimentacao(meuNIB, "deposito", valor)
+            print("Operação realizada com sucesso!")
+        else:
+            print("Saldo insuficiente.")
+            
+        print(f"Saldo atual: {clientes[meuNIB]['saldo']}€")
+    except ValueError:
+        print("Entrada inválida. Digite apenas números.")
+
+def registrarMovimentacao(nib, tipo, valor, destino=None):
+    global contadorMovimentos
+    
+    # 1. Criar o registro detalhado
+    novo_movimento = {
+        "tipo": tipo,
+        "valor": valor,
+        "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "remetente": nib,
+        "destinatário": destino if destino else "N/A"
+    }
+    
+    # 2. Guardar no histórico geral do banco
+    regtransferencias[contadorMovimentos] = novo_movimento
+    
+    # 3. Adicionar o ID à lista de movimentos do cliente específico
+    clientes[nib]["Movimentos"].append(contadorMovimentos)
+    
+    # 4. Incrementar para o próximo ID não se repetir
+    contadorMovimentos += 1
+
+def consultarMovimentos()
