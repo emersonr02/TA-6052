@@ -208,7 +208,21 @@ def apagarCliente():
     except ValueError:
         print("Entrada inválida. Digite apenas números.")
 
-def estatistica():
-    
+def verEstatisticas():
+    valorBanco = 0
+    contadorCliente = 0 
+    contador = 0
+    for cliente in clientes:
+        if clientes[cliente]["Ativo"] == True:
+            contadorCliente ++
+        valorBanco += clientes[cliente]["saldo"]
+
+    for movimentacao in regtransferencias:
+        contador ++
+    print(f"Número de transferências: {contador}")
+    print(f"Saldo do Banco: {valorBanco} | Números de clientes ativos: {contadorCliente} | ")
+
+
+
 
     
