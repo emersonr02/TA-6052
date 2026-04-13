@@ -8,14 +8,10 @@ import getpass
 def loginAdmin():
     print("\n--- Login Administrador ---")
     username = input("Usuario: ")
-    # O getpass esconde a digitacao completamente
     password = getpass.getpass("Digite sua senha (4 numeros): ")
     
-    # Validacao de formato
     if len(password) == 4 and password.isdigit():
-        # Se a senha do admin no seu sistema for '1111' ou 'admin'
-        # Ajuste a comparacao abaixo conforme sua necessidade
-        return username == "admin" and password == "1234" 
+        return username == "admin" and password == "1111" 
     else:
         print("Erro: A senha deve ter exatamente 4 numeros.")
         return False
@@ -32,7 +28,6 @@ def loginUtilizador():
     
     # Primeiro checamos se o formato esta correto
     if len(password) == 4 and password.isdigit():
-        # Depois comparamos com a senha guardada
         if password == dados.clientes[nib]["senha"]:
             print(f"Bem-vindo, {dados.clientes[nib]['nome']}!")
             return nib
@@ -148,7 +143,6 @@ def consultarMovimentos(meuNIB):
     for id_mov in dados.clientes[meuNIB]["Movimentos"]:
         m = dados.regtransferencias.get(id_mov)
         if m:
-            # Removido acento de 'destinatario' aqui tambem
             print(f"[{m['data']}] {m['tipo']:<15} | {m['valor']:>7.2f}EUR | Dest: {m['destinatario']}")
 
 # --- Operacoes Administrativas ---

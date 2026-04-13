@@ -37,15 +37,15 @@ def main():
                 while True:
                     op_u = interface.menuUtilizador()
                     if op_u == "1": 
-                        servicos.consultarSaldo(meuNIB) # Use a função em vez de print direto
+                        servicos.consultarSaldo(meuNIB) 
                     elif op_u == "2": 
                         servicos.realizarLevantamento(meuNIB)
                     elif op_u == "3": 
-                        servicos.realizarDeposito(meuNIB)   # CONECTADO
+                        servicos.realizarDeposito(meuNIB)   
                     elif op_u == "4": 
                         servicos.realizarTransferencia(meuNIB)
                     elif op_u == "5": 
-                        servicos.consultarMovimentos(meuNIB) # CONECTADO
+                        servicos.consultarMovimentos(meuNIB) 
                     elif op_u == "6": 
                         break
         
@@ -56,17 +56,17 @@ def main():
                     if op_a == "1": 
                         servicos.criarCliente()
                     elif op_a == "2": 
-                        servicos.listarClientes()      # CONECTADO
+                        servicos.listarClientes()     
                     elif op_a == "3": 
-                        servicos.pesquisarMovimentacao() # CONECTADO
+                        servicos.pesquisarMovimentacao() 
                     elif op_a == "4": 
-                        servicos.apagarCliente()         # CONECTADO
+                        servicos.apagarCliente()         
                     elif op_a == "5": 
-                        servicos.verEstatisticas()       # CONECTADO
+                        servicos.verEstatisticas()       
                     elif op_a == "6": 
                         break
         elif opcao == "0":
-            encerrar_e_salvar() # <--- ESSENCIAL PARA ESCREVER NO JSON
+            encerrar_e_salvar() 
             print("Encerrando sistema... Ate a proxima!")
             break
 
