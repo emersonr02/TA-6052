@@ -1,14 +1,14 @@
 from datetime import datetime
 
 clientes = {
-    "PT5000": {"nome": "Emerson", "senha": "1234", "saldo": 1000, "Movimentos": [00001]},
-    "PT5001": {"nome": "João", "senha": "5678", "saldo": 500, "Movimentos": [00001]}
+    "PT5000": {"nome": "Emerson", "senha": "1234", "saldo": 1000, "Movimentos": [00001], "Ativo": True},
+    "PT5001": {"nome": "João", "senha": "5678", "saldo": 500, "Movimentos": [00001] "Ativo": True}
     }
-contadorNIB = "02"
+contadorNIB = 2
 regtransferencias = {
     "M00001": {"tipo": "transferência", "remetente": "PT5000", "destinatário": "PT5001", "valor": 100, "data": "2024-06-01"}
     }
-contadorMovimentacao = "02"
+contadorMovimentacao = 2
 def loginAdmin():
     print("Bem-vindo ao sistema de login!")
     username = input("Digite seu nome de usuário: ")
@@ -103,6 +103,7 @@ def realizarDeposito(meuNIB):
         print(f"Saldo atual: {clientes[meuNIB]['saldo']}€")
     except ValueError:
         print("Entrada inválida. Digite apenas números.")
+    registrarMovimentacao(meuNIB, "Depósito", valor)
 
 def registrarMovimentacao(nib, tipo, valor, destino=None):
     global contadorMovimentos
@@ -121,8 +122,93 @@ def registrarMovimentacao(nib, tipo, valor, destino=None):
     
     # 3. Adicionar o ID à lista de movimentos do cliente específico
     clientes[nib]["Movimentos"].append(contadorMovimentos)
-    
+    if destino != None:
+        clientes[destino]["Movimentos"].append(contadorMovimentos)
     # 4. Incrementar para o próximo ID não se repetir
     contadorMovimentos += 1
 
 def consultarMovimentos()
+    print("\n--- Consultar Movimentações ---")
+    for id_movimento in clientes[meuNIB]["Movimentos"]:
+        movimento = regtransferencias.get(id_movimento)
+        if movimento:
+            print(f"ID: {id_movimento} | Tipo: {movimento['tipo']} | Valor: {movimento['valor']}€ | Data: {movimento['data']} | Remetente: {movimento['remetente']} | Destinatário: {movimento['destinatário']}")
+
+def realizarTransferencia(meuNIB):
+    print("\n--- Realizar Transferência ---")
+    destinatario = input("Digite o NIB do destinatário: ")
+    
+    if destinatario not in clientes:
+        print("NIB do destinatário não encontrado.")
+        return
+    
+    try:
+        valor = float(input("Digite o valor a ser transferido: "))
+        if valor <= 0:
+            print("Valor deve ser maior que zero.")
+            return
+        if valor <= clientes[meuNIB]["saldo"]:
+            clientes[meuNIB]["saldo"] -= valor
+            clientes[destinatario]["saldo"] += valor
+            registrarMovimentacao(meuNIB, "Transferência", valor, destino=destinatario)
+            print("Transferência realizada com sucesso!")
+        else:
+            print("Saldo insuficiente.")
+            
+        print(f"Saldo atual: {clientes[meuNIB]['saldo']}€")
+    except ValueError:
+        print("Entrada inválida. Digite apenas números.")
+
+def criarCliente():
+    print("\n--- Criar Cliente ---")
+    nome = input("Digite o nome do cliente: ")
+    senha = input("Digite a senha do cliente: ")
+    saldo_inicial = 1000  # Saldo inicial padrão para novos clientes
+    
+    global contadorNIB
+    contadorNIB = str(int(contadorNIB) + 1).zfill(4)  # Incrementa e formata o NIB
+    novo_nib = "PT" + contadorNIB
+    
+    clientes[novo_nib] = {
+        "nome": nome,
+        "senha": senha,
+        "saldo": saldo_inicial,
+        "Movimentos": []
+    }
+    
+    print(f"Cliente criado com sucesso! NIB: {novo_nib}")
+
+def listarClientes():
+    print("\n--- Lista de Clientes ---")
+    for nib, info in clientes.items():
+        print(f"NIB: {nib} | Nome: {info['nome']} | Saldo: {info['saldo']}€")
+
+def pesquisarMovimentacao():
+    print("\n --- Pesquisaq de Movimentações")
+    id_movimento = int(input("Digite a movimentação que deseja procurar: "))
+    if id_movimento not in regtransferencias:
+        print ("movimentação não existente!")
+        return
+    else:
+         print(f"ID: {id_movimento} | Tipo: {movimento['tipo']} | Valor: {movimento['valor']}€ | Data: {movimento['data']} | Remetente: {movimento['remetente']} | Destinatário: {movimento['destinatário']}")
+
+def apagarCliente():
+    print("\n--- Apagar Cliente ---")
+    try: 
+        nib = input("Digite o NIB do cliente")
+        if nib in clientes && clientes[nib]["Ativo"] == True:
+            op = int(input(f"Deseja apagar o cliente {clientes[nib]["nome"]} | NIB: {nib}? (1 - Sim 0 - Não)"))
+            if op = 0:
+                print("Operação Cancelada!")
+            if op = 1:
+                clientes[nib][Ativo] = False
+                print("Operação Finalizada!")
+            else:
+                print("Opção inválida")
+    except ValueError:
+        print("Entrada inválida. Digite apenas números.")
+
+def estatistica():
+    
+
+    
