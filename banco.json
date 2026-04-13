@@ -1,29 +1,62 @@
 {
-  "clientes": {
-    "PT5000": {
-      "nome": "Emerson",
-      "senha": "1234",
-      "saldo": 1000.0,
-      "Movimentos": [ "M001" ],
-      "Ativo": true
+    "clientes": {
+        "PT5000": {
+            "nome": "Emerson",
+            "senha": "1234",
+            "saldo": 450.0,
+            "Movimentos": [
+                "M001",
+                "M002",
+                "M003"
+            ],
+            "Ativo": true
+        },
+        "PT5002": {
+            "nome": "Ze pilinta",
+            "senha": "1234",
+            "saldo": 0.0,
+            "Movimentos": [],
+            "Ativo": false
+        },
+        "PT5003": {
+            "nome": "Enzo Ribeiro",
+            "senha": "1234",
+            "saldo": 1500.0,
+            "Movimentos": [
+                "M003"
+            ],
+            "Ativo": true
+        }
     },
-    "PT5001": {
-      "nome": "João",
-      "senha": "5678",
-      "saldo": 500.0,
-      "Movimentos": [ "M001" ],
-      "Ativo": true
+    "regtransferencias": {
+        "M001": {
+            "tipo": "transferencia",
+            "remetente": "PT5000",
+            "destinatario": "PT5001",
+            "valor": 100.0,
+            "data": "2024-06-01"
+        },
+        "M002": {
+            "tipo": "Levantamento",
+            "valor": 50.0,
+            "data": "13-04-2026 22:22:31",
+            "remetente": "PT5000",
+            "destinatario": "N/A"
+        },
+        "M003": {
+            "tipo": "Transferencia",
+            "valor": 500.0,
+            "data": "13-04-2026 22:30:39",
+            "remetente": "PT5000",
+            "destinatario": "PT5003"
+        }
+    },
+    "contadorNIB": 5004,
+    "contadorMovimentos": 4,
+    "stock_notas": {
+        "5": 50,
+        "10": 50,
+        "20": 30,
+        "50": 10
     }
-  },
-  "regtransferencias": {
-    "M001": {
-      "tipo": "transferência",
-      "remetente": "PT5000",
-      "destinatário": "PT5001",
-      "valor": 100.0,
-      "data": "2024-06-01"
-    }
-  },
-  "contadorNIB": 5002,
-  "contadorMovimentos": 2
 }
