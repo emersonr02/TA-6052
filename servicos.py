@@ -2,27 +2,46 @@
 # servicos.py
 from datetime import datetime
 import dados
+import getpass
 
 # --- Autenticacao ---
 def loginAdmin():
     print("\n--- Login Administrador ---")
     username = input("Usuario: ")
-    password = input("Senha: ")
-    return username == "admin" and password == "admin"
+    # O getpass esconde a digitacao completamente
+    password = getpass.getpass("Digite sua senha (4 numeros): ")
+    
+    # Validacao de formato
+    if len(password) == 4 and password.isdigit():
+        # Se a senha do admin no seu sistema for '1111' ou 'admin'
+        # Ajuste a comparacao abaixo conforme sua necessidade
+        return username == "admin" and password == "1234" 
+    else:
+        print("Erro: A senha deve ter exatamente 4 numeros.")
+        return False
 
 def loginUtilizador():
     print("\n--- Login Utilizador ---")
     nib = input("Digite seu NIB: ")
+    
     if nib not in dados.clientes or not dados.clientes[nib]["Ativo"]:
         print("NIB inexistente ou conta desativada.")
         return None
     
-    password = input("Digite sua senha: ")
-    if password == dados.clientes[nib]["senha"]:
-        print(f"Bem-vindo, {dados.clientes[nib]['nome']}!")
-        return nib
-    print("Senha incorreta.")
-    return None
+    password = getpass.getpass("Digite sua senha (4 numeros): ")
+    
+    # Primeiro checamos se o formato esta correto
+    if len(password) == 4 and password.isdigit():
+        # Depois comparamos com a senha guardada
+        if password == dados.clientes[nib]["senha"]:
+            print(f"Bem-vindo, {dados.clientes[nib]['nome']}!")
+            return nib
+        else:
+            print("Senha incorreta.")
+            return None
+    else:
+        print("Erro: A senha deve conter 4 numeros.")
+        return None
 
 # --- Sistema de Registo ---
 def registrarMovimentacao(nib, tipo, valor, destino=None):
