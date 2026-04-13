@@ -1,0 +1,29 @@
+{
+  "clientes": {
+    "PT5000": {
+      "nome": "Emerson",
+      "senha": "1234",
+      "saldo": 1000.0,
+      "Movimentos": [ "M001" ],
+      "Ativo": true
+    },
+    "PT5001": {
+      "nome": "João",
+      "senha": "5678",
+      "saldo": 500.0,
+      "Movimentos": [ "M001" ],
+      "Ativo": true
+    }
+  },
+  "regtransferencias": {
+    "M001": {
+      "tipo": "transferência",
+      "remetente": "PT5000",
+      "destinatário": "PT5001",
+      "valor": 100.0,
+      "data": "2024-06-01"
+    }
+  },
+  "contadorNIB": 5002,
+  "contadorMovimentos": 2
+}
